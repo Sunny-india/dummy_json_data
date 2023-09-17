@@ -1,19 +1,25 @@
 /// First set starts here.
-class Data {
-  int total, skip, limit;
-  List<QuoteModel> quotes;
-  Data(
-      {required this.total,
-      required this.skip,
-      required this.limit,
-      required this.quotes});
-  factory Data.fromJson(Map<String, dynamic> json) {
+class DataModel {
+  int? total, skip, limit;
+  List<QuoteModel>? quotes;
+  DataModel({this.total, this.skip, this.limit, this.quotes});
+
+  factory DataModel.fromJson(Map<String, dynamic> json) {
     List<QuoteModel> kaam = [];
-    List<Map<String, dynamic>> innerQ = json['quotes'];
-    innerQ.map((e) {
-      kaam.add(QuoteModel.fromJson(e));
-    }).toList();
-    return Data(
+
+    /// instead of defining the type of list as List<Map<String, dynamic>>
+    /// we need to write it as the List<dynamic> type. otherwise it may throw
+    /// a type error at runtime, however we may try to do things otherwise
+    List<dynamic> innerQ = json['quotes'];
+    // innerQ.map((e) {
+    //   kaam.add(QuoteModel.fromJson(e));
+    // }).toList();
+
+    for (var element in innerQ) {
+      kaam.add(QuoteModel.fromJson(element));
+    }
+
+    return DataModel(
         total: json['total'],
         skip: json['skip'],
         limit: json['limit'],
@@ -92,19 +98,16 @@ class UserInComments {
 /// Third set starts here.
 
 class JsonPost {
-  int total, skip, limit;
-  List<Posts> posts;
-  JsonPost(
-      {required this.total,
-      required this.skip,
-      required this.limit,
-      required this.posts});
+  int? total, skip, limit;
+  List<Post>? posts;
+  JsonPost({this.total, this.skip, this.limit, this.posts});
   factory JsonPost.fromJson(Map<String, dynamic> json) {
-    List<Posts> endList = [];
-    List<Map<String, dynamic>> inner = json['posts'];
-    inner.forEach((element) {
-      endList.add(Posts.fromJson(element));
-    });
+    List<Post> endList = [];
+    List<Map<String, dynamic>> inner =
+        (json['posts']) as List<Map<String, dynamic>>;
+    for (var element in inner) {
+      endList.add(Post.fromJson(element));
+    }
     return JsonPost(
         total: json['total'],
         skip: json['skip'],
@@ -113,27 +116,27 @@ class JsonPost {
   }
 }
 
-class Posts {
+class Post {
   int id, reactions;
   String title, body;
   List<String> tags;
-  Posts(
+  Post(
       {required this.id,
       required this.reactions,
       required this.title,
       required this.body,
       required this.tags});
 
-  factory Posts.fromJson(Map<String, dynamic> json) {
+  factory Post.fromJson(Map<String, dynamic> json) {
     // List<dynamic> inner  = json['tags'];
     // or
     // List<String> inner  = json['tags'];
-    return Posts(
+    return Post(
         id: json['id'],
         reactions: json['reactions'],
         title: json['title'],
         body: json['body'],
-        tags: json['tags'] as List<String>);
+        tags: (json['tags']) as List<String>);
   }
 }
 
