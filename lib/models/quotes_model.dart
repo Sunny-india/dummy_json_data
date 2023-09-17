@@ -404,3 +404,11 @@ class Company {
 }
 
 /// fifth set ends here
+
+List<String> categories = [
+  'DataModel',
+  'SecondModel',
+  'JsonPost',
+  'ForthJson',
+  'User'
+];

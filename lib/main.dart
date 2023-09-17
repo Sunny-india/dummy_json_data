@@ -1,3 +1,5 @@
+import 'package:dummy_json_data/models/quotes_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'data_page.dart';
@@ -14,25 +16,51 @@ void main() {
   ));
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String selectedValue = 'DataModel';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: CupertinoColors.systemPurple),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              width: 300,
+              child: DropdownButton<String>(
+                value: selectedValue,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedValue = newValue!;
+                  });
+                },
+                items: categories.map((e) {
+                  return DropdownMenuItem<String>(value: e, child: Text(e));
+                }).toList(),
+                isExpanded: true,
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 40),
+          Text(selectedValue),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
