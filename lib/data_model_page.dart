@@ -8,16 +8,44 @@ import 'models/quotes_model.dart';
 
 import 'package:http/http.dart' as http;
 
-class DataPage extends StatefulWidget {
-  const DataPage({super.key});
+class DataModelPage extends StatefulWidget {
+  const DataModelPage({super.key});
 
   @override
-  State<DataPage> createState() => _DataPageState();
+  State<DataModelPage> createState() => _DataModelPageState();
 }
 
-class _DataPageState extends State<DataPage> {
+class _DataModelPageState extends State<DataModelPage> {
   late Future<DataModel?> data;
   late String appBarTitle = '';
+
+  Future<DataModel?> fetchFromJson() async {
+    var response = await http.get(Uri.parse("https://dummyjson.com/quotes"));
+    print(response.runtimeType);
+    if (response.statusCode == 200) {
+      print(response.body);
+      var json = jsonDecode(response.body);
+      DataModel dataModel = DataModel.fromJson(json);
+      fetchTitle();
+      return dataModel;
+    } else {
+      return DataModel();
+    }
+  }
+
+  void fetchTitle() {
+    data.then((dataModel) {
+      if (dataModel != null) {
+        appBarTitle = dataModel.total.toString();
+      } else {
+        appBarTitle = 'Loading';
+      }
+    });
+    data.whenComplete(() {
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
     data = fetchFromJson();
@@ -76,32 +104,5 @@ class _DataPageState extends State<DataPage> {
         ),
       ),
     );
-  }
-
-  Future<DataModel?> fetchFromJson() async {
-    var response = await http.get(Uri.parse("https://dummyjson.com/quotes"));
-    print(response.runtimeType);
-    if (response.statusCode == 200) {
-      print(response.body);
-      var json = jsonDecode(response.body);
-      DataModel dataModel = DataModel.fromJson(json);
-      fetchTitle();
-      return dataModel;
-    } else {
-      return DataModel();
-    }
-  }
-
-  void fetchTitle() {
-    data.then((dataModel) {
-      if (dataModel != null) {
-        appBarTitle = dataModel.total.toString();
-      } else {
-        appBarTitle = 'Loading';
-      }
-    });
-    data.whenComplete(() {
-      setState(() {});
-    });
   }
 }

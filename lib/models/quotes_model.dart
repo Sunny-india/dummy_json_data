@@ -42,17 +42,13 @@ class QuoteModel {
 
 /// Second set starts here.
 class SecondModel {
-  int total, skip, limit;
-  List<Comments> comments;
-  SecondModel(
-      {required this.total,
-      required this.skip,
-      required this.limit,
-      required this.comments});
+  int? total, skip, limit;
+  List<Comments>? comments;
+  SecondModel({this.total, this.skip, this.limit, this.comments});
 
   factory SecondModel.fromJson(Map<String, dynamic> json) {
     List<Comments> endList = [];
-    List<Map<String, dynamic>> inside = json['comments'];
+    List<dynamic> inside = json['comments'];
     inside.map((e) {
       endList.add(Comments.fromJson(e));
     }).toList();

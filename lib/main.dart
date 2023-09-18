@@ -1,8 +1,9 @@
 import 'package:dummy_json_data/models/quotes_model.dart';
+import 'package:dummy_json_data/page_for_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'data_page.dart';
+import 'data_model_page.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -87,65 +88,12 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const DataPage();
+            return const DataModelPage();
           }));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.next_plan_outlined),
       ),
-    );
-  }
-}
-
-class PageForData extends StatefulWidget {
-  const PageForData({super.key, required this.webAddress});
-  final String webAddress;
-
-  @override
-  State<PageForData> createState() => _PageForDataState();
-}
-
-class _PageForDataState extends State<PageForData> {
-  fromTheWeb() async {
-    //  await http.get(Uri.parse());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              bottom: 0,
-              child: sideNavigator(size),
-            ),
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                height: size.height,
-                width: size.width * .75,
-                color: CupertinoColors.activeOrange,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget sideNavigator(Size size) {
-    return Container(
-      height: size.height * .8,
-      width: size.width * .25,
-      color: CupertinoColors.systemTeal,
-      child: Text('Side Navigator'),
     );
   }
 }
