@@ -405,10 +405,10 @@ class Company {
 
 /// fifth set ends here
 
-List<String> categories = [
-  'DataModel',
-  'SecondModel',
-  'JsonPost',
-  'ForthJson',
-  'User'
-];
+Map<String, dynamic> categories = {
+  'DataModel': 'https://dummyjson.com/quotes',
+  'SecondModel': 'https://dummyjson.com/comments',
+  'JsonPost': 'https://dummyjson.com/posts',
+  'ForthJson': 'https://dummyjson.com/carts',
+  'User': 'https://dummyjson.com/users'
+};
