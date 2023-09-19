@@ -99,8 +99,7 @@ class JsonPost {
   JsonPost({this.total, this.skip, this.limit, this.posts});
   factory JsonPost.fromJson(Map<String, dynamic> json) {
     List<Post> endList = [];
-    List<Map<String, dynamic>> inner =
-        (json['posts']) as List<Map<String, dynamic>>;
+    List<dynamic> inner = (json['posts']);
     for (var element in inner) {
       endList.add(Post.fromJson(element));
     }
@@ -124,15 +123,27 @@ class Post {
       required this.tags});
 
   factory Post.fromJson(Map<String, dynamic> json) {
-    // List<dynamic> inner  = json['tags'];
-    // or
-    // List<String> inner  = json['tags'];
+    dynamic inner = json['tags'];
+
+    List<String> tags = [];
+
+    // first checks if that dynamic is a type of List
+    if (inner is List) {
+      for (var innerData in inner) {
+        // further checks if its each element is of String type
+
+        if (innerData is String) {
+          tags.add(innerData);
+        }
+      }
+    }
     return Post(
-        id: json['id'],
-        reactions: json['reactions'],
-        title: json['title'],
-        body: json['body'],
-        tags: (json['tags']) as List<String>);
+      id: json['id'],
+      reactions: json['reactions'],
+      title: json['title'],
+      body: json['body'],
+      tags: tags,
+    );
   }
 }
 

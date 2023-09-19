@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'data_model_page.dart';
+import 'json_post_page.dart';
 
 class PageForData extends StatefulWidget {
   const PageForData({super.key, required this.webAddress});
@@ -133,7 +134,8 @@ class _PageForDataState extends State<PageForData> {
           children: const [
             DataModelPage(),
             SecondModelPage(),
-            Center(child: Text('JsonPost')),
+            JsonPostPage(),
+            //Center(child: Text('JsonPost')),
             Center(child: Text('ForthJson')),
             Center(child: Text('User')),
           ]),
